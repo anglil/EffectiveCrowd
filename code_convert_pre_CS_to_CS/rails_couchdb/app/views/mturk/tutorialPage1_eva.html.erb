@@ -1,0 +1,68 @@
+<!--<h1>Mturk#tutorialPage1</h1>
+<p>Find me in app/views/mturk/tutorialPage1.html.erb</p>-->
+
+<!--panel heading-->
+<div class="panel-heading">
+	<h1 class="panel-title light gray "> 
+	<p style="font-size:20px" class="panel-title light gray"><strong>Relation definitions for <font color="blue">has nationality</font> and <font color="blue">lived in</font></strong></p>
+	</h1>
+</div>
+
+<div class="panel-body">
+
+<!-- relation definition -->
+<strong><font color="blue">Has nationality</font></strong>: The location must be either a country where the person has citizenship or an adjective for a country such as "American" or "French". If someone holds a national office or plays for a national sports team, this implies a <strong><font color="has nationality"></font></strong> relatoin. A person's nationality by itself does not imply the <strong><font color="blue">lived in</font></strong> or <strong><font color="blue">was born in</font></strong> relations.
+
+<br><br>
+
+<strong><font color="blue">Lived in</font></strong>: Means a person spent time in a place for more than a visit. You can assume a <strong><font color="blue">lived in</font></strong> relation for the country of national officials. Otherwise, working in a location does not imply that a person has a <strong><font color="blue">lived in</font></strong> relation. <strong><font color="blue">lived in</font></strong> does not imply <strong><font color="blue">has nationality</font></strong> or <strong><font color="blue">was born in</font></strong>.
+
+<br><br>
+
+<!-- quetion begins -->
+<p style="font-size:20px" class="instruction bold"><strong>Practice sentence 1 of 5 (select all relations that apply):</strong></p>
+
+<ul>
+	<li>"Vice President Joe Biden met today with <strong><font color="green">Turkish</font></strong> Prime Minister <strong><font color="red">Ahmet Davutoglu</font></strong>"
+	<form action='/mturk/tutorial2' role="form" method="post"> <!--direct to the next page?-->
+		<div class="form-group">
+			
+			<!-- regular optionas -->
+			<div class="btn-toolbar-vertical" data-toggle="buttons">
+				
+				<!--option 1: response[r1]="has nationality"-->
+				<label class="btn btn-default btn-lg btn-block" id="checkboxes">
+					<input type="checkbox" name="response[r1]" value="has nationality" />
+					<span id="option"><em>has nationality</em> <font color="rgb(127,255,212)">Assume a national officer has nationality of that country</font></span>
+				</label>
+
+				<br>				
+
+				<!--option 2: response[r2]="lived in"-->
+				<label class="btn btn-default btn-lg btn-block" id="checkboxes">
+					<input type="checkbox" name="response[r2]" value="lived in" />
+					<span id="option"><em>lived in</em> <font color="rgb(127,255,212)">Assume a national officer lives in that country</font></span>
+				</label>
+
+			</div>
+
+			<!-- submit and none of these -->
+			<div class="btn-toolbar-vertical">
+
+				<!--option 3: option="none"-->
+				<button type="submit" class="btn btn-danger btn-lg btn-block" name="option" value="none">None of these</button>
+				
+				<br>
+		
+				<!--option 4: option="submit"-->
+				<button type="submit" class="btn btn-primary btn-lg btn-block" name="option" value="submit">Next</button>
+			</div>
+		
+			<!--connect the answer with worker id-->
+			<input type="hidden" name="worker_id" value="<%= @worker_id %>">
+
+		</div>
+	</form>
+</ul>
+
+</div> <!--end of panel-body-->

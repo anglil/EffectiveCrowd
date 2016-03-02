@@ -1,0 +1,42 @@
+<!--<h1>Mturk#consentPage</h1>
+<p>Find me in app/views/mturk/consentPage.html.erb</p>-->
+<div class="panel-heading">
+	<h1 class="panel-title light gray">Privacy Policy</h1>
+</div>
+
+<div class="panel-body" style="text-align: left">
+	
+	<h4><small>Why we are doing this research: </small></h4>
+	<p>We are developing ways to measure people's English comprehension skills, predict the meaning of textual passages, and estimate the difficulty people have when trying to read and interpret the text.</p>
+	<h4><small>What you will have to do: </small></h4>
+	<p>You will be asked to read and understand an English sentence and then select the facts conveyed by that sentence.</p>
+	<h4><small>Potential risks: </small></h4>
+	<p>There are no risks anticipated in taking part in this study. Your participation is completely voluntary, and you are free to leave at any time without penalty or loss of benefits to which you are otherwise entitled.</p>
+	<h4><small>Privacy: </small></h4>
+	Your responses will be kept anonymous. We do not collect any information that could be used to directly establish your identity.
+	<h4><small>To contact the researcher: </small></h4>
+	If you have questions or concerns about this research, please contact <a href="http://www.cs.washington.edu/people/faculty/weld/" target="_blank">Prof. Daniel Weld</a>, Computer Science & Engineering, University of Washington, Box 352350, Seattle WA 98195-2350, <a href="mailto:weld@cs.washington.edu?Subject=[PraxEng]: " target="_top">weld@cs.washington.edu</a>
+
+	<br><br>
+
+	Whom to contact about your rights in this resarch, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm: Human Subjects Division, University of Washington, Box 359470, Seattle, Washington 98195, Telephone: (206) 543-0098
+
+	<br><br>
+
+	<em>By participating in the test you confirm that you are above the age of 18 and that you have read and understood this information and agree to take part in this research. Your participation is voluntary and you are free to leave the experiment at any time by simply closing the web browser.</em> <!-- emphasized text-->
+
+	<form action='/mturk/tutorial1' role="form" method="post"> <!-- post != get -->
+		<div class="form-group">
+			
+			<div class="btn-toolbar-vertical">
+				<button type="submit" class="btn btn-primary" name="option" value="submit">Continue</button>
+			</div>
+
+			<input type="hidden"  name="worker_id" value="<% @worker_id %>">
+			
+		</div>
+	</form>
+
+</div>
+	
+

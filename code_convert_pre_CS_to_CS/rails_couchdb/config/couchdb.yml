@@ -1,0 +1,21 @@
+development: &development
+  protocol: 'http'
+  host: localhost
+  port: 5984
+  prefix: chris
+  suffix: data_exp_2000
+  username:	
+  password:
+
+test:
+  <<: *development
+  suffix: test
+
+production:
+  protocol: 'http'
+  host: localhost
+  port: 5984
+  prefix: chris
+  suffix: data_exp_2000
+  username:
+  password:

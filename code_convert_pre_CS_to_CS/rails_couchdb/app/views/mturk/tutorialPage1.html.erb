@@ -1,0 +1,117 @@
+<!--<h1>Mturk#tutorialPage1</h1>
+<p>Find me in app/views/mturk/tutorialPage1.html.erb</p>-->
+
+<!--panel heading-->
+<div class="panel-heading">
+	<h1 class="panel-title light gray "> 
+	<p style="font-size:20px" class="panel-title light gray"><strong>Relation definitions for <font color="blue">has nationality</font> and <font color="blue">lived in</font></strong></p>
+	</h1>
+</div>
+
+<div class="panel-body">
+
+<!-- relation definition -->
+<strong><font color="blue">Has nationality</font></strong>: The highlighted location must be either a country where the person has citizenship or an adjective for a country such as "American" or "French". If someone holds a national office or plays for a national sports team, this implies <strong>has nationality</strong>. A person's nationality by itself does not imply the <strong>lived in</strong> or <strong>was born in</strong> relations.
+
+<br><br>
+
+<strong><font color="blue">Lived in</font></strong>: Means a person spent time in the highlighted location for more than a visit. You can assume a <strong>lived in</strong> relation for the country of national officials. Otherwise, working in a location does not imply that a person has a <strong>lived in</strong> relation. <strong>lived in</strong> does not imply <strong>has nationality</strong> or <strong>was born in</strong>.
+
+<br><br>
+
+<!-- quetion begins -->
+<p style="font-size:20px" class="instruction bold"><strong>Practice sentence 1 of 5 (select all relations that apply):</strong></p>
+	
+<ul>
+	<li>"Vice President Joe Biden met today with <strong><font color="green">Turkish</font></strong> Prime Minister <strong><font color="red">Ahmet Davutoglu</font></strong>"
+		
+	<form action='/mturk/tutorial1' role="form" method="post"> <!--form action="URL"-->
+		<div class="form-group">
+			
+			<!-- regular options -->
+			<div class="btn-toolbar-vertical" data-toggle="buttons">
+				
+				<table>
+				<tr><td>Yes</td><td>No</td><td></td><td><td>&nbsp;</td><td>&nbsp;</td></td></tr>
+
+				<!--option 1: response[r1]="has nationality"-->
+				<tr>
+				<td>
+				<label for="yes">
+					<% if @check != nil && @check["r1"] == "has nationality" %>
+					<input type="radio" name="response[r1]" value="has nationality" checked>
+					<% else %>	
+					<input type="radio" name="response[r1]" value="has nationality">
+					<% end %>
+				</label>
+				</td>	
+				<td>
+				<label for="no">
+					<% if @check != nil && @check["r1"] == "has nationality neg" %>
+					<input type="radio" name="response[r1]" value="has nationality neg" checked>
+					<% else %>
+					<input type="radio" name="response[r1]" value="has nationality neg">
+					<% end %>
+				</label>
+				</td>
+				<td>has nationality</td> <td>&nbsp;</td><td>&nbsp;</td>
+				<td style="<%= @colorX["r1"] %>"><%= @messageX["r1"] %></td>
+				</tr>
+				
+				<!--option 2: response[r2]="lived in"-->
+				<tr>
+				<td>
+				<label for="yes">
+					<% if @check != nil && @check["r2"] == "lived in" %>
+					<input type="radio" name="response[r2]" value="lived in" checked>
+					<% else %>
+					<input type="radio" name="response[r2]" value="lived in">
+					<% end %>
+				</label>
+				</td>
+				<td>
+				<label for="no">
+					<% if @check != nil && @check["r2"] == "lived in neg" %>
+					<input type="radio" name="response[r2]" value="lived in neg" checked>
+					<% else %>
+					<input type="radio" name="response[r2]" value="lived in neg">
+					<% end %>
+				</label>
+				</td>
+				<td>lived in</td> <td>&nbsp;</td><td>&nbsp;</td>
+				<td style="<%= @colorX["r2"] %>"><%= @messageX["r2"] %></td>
+				</tr>
+				</table>
+			</div>	
+	
+			<!--enabled upon rendering in-->
+			<% if (@question_num == 0) || (@correct == false) %>
+			<div class="btn-toolbar-vertical">
+				<button type="submit" class="btn btn-primary btn-lg btn-block" name="option" value="submit">Submit</button>
+			</div>
+			<% else %>
+			<div class="btn-toolbar-vertical">
+				<button type="submit" disabled class="btn btn-primary btn-lg btn-block" name="option" value="submit">Submit</button>
+			</div>
+			<% end %>
+	
+			<!--connect the answer with worker id-->
+			<input type="hidden" name="worker_id" value="<%= @worker_id %>">
+			<input type="hidden" name="chances" value="<%= @chances %>">
+		</div>
+	</form>
+</ul>
+
+<p style="<%= @color0 %>"><%= @message%></p>
+
+<% if (@correct == true) %>
+	<form class="form-horizontal" role="form" action="/mturk/tutorial2" method="post">
+		<div class="btn-toolbar-vertical">
+			<button type="submit" class="btn btn-default">Next</button>
+		</div>	
+		<input type="hidden" name="worker_id" value="<%=@worker_id%>">
+		<input type="hidden" name="chances" value="<%= @chances %>">
+	</form>
+<% end %>
+
+</div> <!--panel-body end-->

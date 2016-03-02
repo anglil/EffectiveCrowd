@@ -1,0 +1,87 @@
+<!--not eligible in the tutorial phase, no pay-->
+<% if @fromTutorial != nil %>
+<p>Sorry, you only have 10 chances to pass the tutorial. You may start over, but in the mean time, any comment on the tutorial will be welcome.</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>
+
+
+<!--not eligible, no pay -->
+<% if @fromWeedOut != nil %>
+<p>Sorry, but you got too many answers wrong, or you left with too few questions answered in the last submission. </p>
+<p><!--You will be paid according to the number of questions you have answered ($0.5).--> Any comment on this question set will be welcome. Thank you for participation.</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>
+
+
+<!--bad performance-->
+<% if @fromFailure != nil %>
+<p>Sorry, you did not give right answers to many of the questions we know the answers to. You will be paid according to the number of questions you have answered. And you are welcome to come back to continue from here by taking another one of the tasks. </p>
+<p>In total, you have finished <%=@question_index%> questions, and have earned $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)%>. The additional bonus is $<%=(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p>
+<p>Please fill in your confirmation code on the Amazon Mechanical Turk page so that we will be able to pay you a total of $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)+(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p> 
+<p>Your confirmation code: <%=@complete_code%></p>
+<p>Finally, any comment on this question set will be highly welcome!</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>
+
+
+<!--worker opts out-->
+<% if @fromCheckpoint != nil %>
+<p>Thanks for your participation!</p> 
+<p>In total, you have finished <%=@question_index%> questions, and have earned $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)%>. The additional bonus is $<%=(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p>
+<p>Please fill in your confirmation code on the Amazon Mechanical Turk page so that we will be able to pay you a total of $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)+(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p> 
+<p>Your confirmation code: <%=@complete_code%></p>
+<p>Finally, any comment on this question set will be highly welcome!</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>
+
+
+<!--from the end-->
+<% if @fromEnd != nil %>
+<p>Congratulations! You have completed all the questions.</p> 
+<p>In total, you have finished <%=@question_index%> questions, and have earned $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)%>. The additional bonus is $<%=(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p>
+<p>Please fill in your confirmation code on the Amazon Mechanical Turk page so that we will be able to pay you a total of $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)+(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p> 
+<p>Your confirmation code: <%=@complete_code%></p>
+<p>Finally, any comment on this question set will be highly welcome!</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>
+
+
+<!--from running out of questions-->
+<% if @fromRunOut != nil %>
+<p>You have completed all the questions. Please stay tuned for more fun questions to come in the future. Thanks!</p> 
+<p>In total, you have finished <%=@question_index%> questions, and have earned $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)%>. The additional bonus is $<%=(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p>
+<p>Please fill in your confirmation code on the Amazon Mechanical Turk page so that we will be able to pay you a total of $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)+(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>.</p> 
+<p>Your confirmation code: <%=@complete_code%></p>
+<p>Finally, any comment on this question set will be highly welcome!</p>
+
+<form action="/mturk" method="POST"> <!--go to the completion page-->
+Your comments: <br>
+<textarea name="comments" rows="15" cols="50"></textarea><br><br>
+<input type="submit" value="Submit">
+</form>
+<% end %>

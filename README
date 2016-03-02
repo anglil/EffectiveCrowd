@@ -1,0 +1,163 @@
+Relation extraction system
+
+#------------------------------------------------------
+1. Getting the original data
+input: 
+tokenized sentences: /projects/WebWare8/Multir/MultirSystem/files/corpus/FullCorpus/sentences.meta
+sentIndex	docId	doc
+distant supervision for each sentence: /projects/WebWare8/Multir/KBP2014/KBPModel1/DistantSupervision/PERLOC-DS
+arg1Id	arg1Span1	arg1Span2	arg1	arg2Id	arg2Span1	arg2Span2	arg2	sentIndex	relation
+
+system:
+/homes/gws/anglil/learner/code_getFeaturizedData/getDSDataWithoutFeature.py (also handle relations that do not appear in the preprocessed feature file, e.g., traveled-to)
+
+output/input:
+training data from distant supervision (without features):
+/homes/gws/anglil/learner/data_featurized/train_original_pre_feature
+arg1	arg1Span1Real	arg1Span2Real	arg2	arg2Span1Real	arg2Span2Real	docId	relation	doc
+
+system:
+/projects/WebWare6/anglil/MultirExperiments/MultiR/multir-release/MultirFramework/src/main/java/edu/washington/multirframework/featuregeneration/DefaultFeatureGenerator.java
+sbt "runMain edu.washington.multirframework.featuregeneration.DefaultFeatureGenerator"
+
+output:
+training data from distant supervision (with features):
+/homes/gws/anglil/learner/data_featurized/train_original
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+#------------------------------------------------------
+1. Alternative feature generation for getting the original data
+input: 
+tokenized sentences: /projects/WebWare8/Multir/MultirSystem/files/corpus/FullCorpus/sentences.meta
+sentIndex	docId	doc
+distant supervision for each sentence: /projects/WebWare8/Multir/KBP2014/KBPModel1/DistantSupervision/PERLOC-DS
+arg1Id	arg1Span1	arg1Span2	arg1	arg2Id	arg2Span1	arg2Span2	arg2	sentIndex	relation
+the preprocessed feature file preprocessed:
+/projects/WebWare8/Multir/KBP2014/KBPModel1/FeatureGeneration/PERLOC-FG
+sentIndex	arg1Id	arg2Id	relation	{feature}...
+
+system:
+/homes/gws/anglil/learner/code_getFeaturizedData/getData.py (can't handle relations that do not appear in the preprocessed feature file, e.g., traveled-to)
+
+output:
+training data from distant supervision (with features):
+/homes/gws/anglil/learner/data_featurized/train_DS_*relation*
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+#------------------------------------------------------
+#------------------------------------------------------
+#------------------------------------------------------
+3. Getting the CS data (the CS data was originally part of the DS data)
+input: 
+X from before crowdsourcing (with features) and Y from crowdsourcing (EM or majority vote)
+
+system:
+/projects/WebWare6/anglil/TurkData/Experiment9_AMT_myTurk4_boto/myTurk.py
+
+output:
+training data from crowdsourcing (with features):
+for MultiR multi-class classifier: 
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_MJ_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_MJ_neg
+for binary classifiers:
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_nationality_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_nationality_neg
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_born_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_born_neg
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_lived_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_lived_neg
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_died_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_died_neg
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_travel_pos
+/homes/gws/anglil/test/traing_CS_and_DS_five_relations/train_CS_travel_neg
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...	
+
+#------------------------------------------------------
+4. Getting the test data (with features, because the CS data was originally part of the DS data)
+input:
+X from before crowdsourcing (with features) and Y from hand-labeling
+
+system:
+/projects/WebWare6/anglil/TurkData/Experiment9_AMT_myTurk4_boto/myTurk.py
+
+output:
+test data (with features):
+/homes/gws/anglil/test/test_multiPositive
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+#------------------------------------------------------
+#------------------------------------------------------
+#------------------------------------------------------
+5. Split training data for solving for confidence intervals (split DS or CS)
+
+input:
+training data that combines DS and CS and gets split
+/homes/gws/anglil/test/train_CS_and_DS_five_relations/*trainingData*
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+system:
+/homes/gws/anglil/test/trainingDataSplit.py "trainingFile" "trainingFileSplit" "DS/CS"
+
+output:
+the split training data:
+/homes/gws/anglil/test/train_CS_and_DS_five_relations/train/*splitData*
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+#------------------------------------------------------
+6. Training and testing with MultiR
+input:
+the split training data:
+/homes/gws/anglil/test/train_CS_and_DS_five_relations/train/*splitData*
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+system:
+for DS:
+/homes/gws/anglil/test/getResultData.sh
+for CS:
+/homes/gws/anglil/test/getResultDataForCS.sh
+(including a subsystem: 
+/projects/WebWare6/anglil/MultirExperiments/MultiR/multir-release/run.sh 
+that generates the intermediate result: 
+/projects/WebWare6/anglil/MultirExperiments/MultiR/multir-release/results
+and the subsystem 
+/homes/gws/anglil/test/eval2.py 
+that generates all the evaluation results)
+
+output:
+the precision, recall and f1 scores:
+/homes/gws/anglil/test/*resMultir*
+3 by 5 matrix
+
+#------------------------------------------------------
+6. Training and testing with binary classifiers
+input:
+the split training data:
+/homes/gws/anglil/test/train_CS_and_DS_five_relations/train/*splitData*
+arg1	arg1Span1	arg1Span2	arg2	arg2Span1	arg2Span2	docId	relation	score	sentSpan1	sentSpan2	doc	{feature, featureScore}...
+
+system:
+for DS:
+/homes/gws/anglil/test/binary_classification.py
+for CS:
+/homes/gws/anglil/test/binary_classification_ForCS.py
+
+output:
+the precision, recall and f1 scores:
+/homes/gws/anglil/test/*resBi*
+3 by 5 matrix
+
+#------------------------------------------------------
+7. Computing precision, recall and f1 (evaluating)
+input:
+the precision, recall and f1 scores:
+/homes/gws/anglil/test/*res* (with only CS data with MultiR: resTrainCS, with only CS data with binary: resTrainCSBi)
+3 by 5 matrix
+
+system:
+for DS:
+/homes/gws/anglil/test/evalConfidenceInterval.py "multir" or "bi"
+for CS:
+/homes/gws/anglil/test/evalConfidenceIntervalForCS.py "multir" or "bi"
+
+output:
+figures

@@ -1,0 +1,91 @@
+<!--<h1>Mturk#login</h1>
+<p>Find me in app/views/mturk/login.html.erb</p>-->
+
+<head>
+	<style media="screen" type="text/css">
+		.wrapper { text-align: center; }
+	</style>
+</head>
+
+<div class="panel-heading">
+	<h1 class="panel-title bold gray">Batch <%=(@batch_index.to_i-@batch_index_pre.to_i)%> finished</h1>
+</div>
+<div class="panel-body">
+	<ul style="text-align: left">
+		<p>Congratulations! You just completed a batch of 20 questions. In total, you have finished <%=@question_index%> questions, and have earned $<%=((@batch_index.to_i-@batch_index_pre.to_i)*0.5).round(3)%>.</p>
+
+		<% if (@batch_index.to_i-@batch_index_pre.to_i)%10 == 0 %>
+			<p>In addition, we have a bonus of $1.00 for you for just completing 10 whole batches. The bonus now adds up to $<%(((@batch_index.to_i-@batch_index_pre.to_i)/10)*1).round(3)%>. </p>
+		<% end %>
+		
+		<p>You may go on by clicking "continue" to do more questions and earn more, including a bonus of $1.00 if you finish a set of 10 batches.</p>
+
+		<p>You could choose to leave by clicking "finish", in which case you will be paid according to the questions you have completed. </p>
+	</ul>	
+		
+
+	<form class="form-horizontal" role="form" action='/mturk/question' method="post">
+		<div class="btn-toolbar-vertical">
+			<button type="submit" class="btn btn-primary btn-lg btn-block" name="option" value="continue">Continue</button>
+		</div>
+
+		<input type="hidden" name="worker_id" value="<%= @worker_id %>">
+		<input type="hidden" name="chance_q" value="<%= @chance_q %>">
+		<input type="hidden" name="hit_window" value="<%= @hit_window %>">
+
+		<!--<% if @test_question_finished != nil %>
+		<% for i in 0..(@test_question_finished.length-1) %>
+		<input type="hidden" name="test_question_finished[<%=i%>]" value="<%=@test_question_finished[i]%>">
+		<% end %>
+		<% end %>
+
+		<% if @real_question_finished != nil %>
+		<% for i in 0..(@real_question_finished.length-1) %>
+		<input type="hidden" name="real_question_finished[<%=i%>]" value="<%=@real_question_finished[i]%>">
+		<% end %>
+		<% end %>-->
+
+		<% if @test_question_index_in_batch != nil %>
+		<% for i in 0..(@test_question_index_in_batch.length-1) %>
+		<input type="hidden" name="test_question_index_in_batch[<%=i%>]" value="<%=@test_question_index_in_batch[i]%>">
+		<% end %>
+		<% end %>
+
+		<input type="hidden" name="current_question_id" value= "<%= @current_question["_id"] %>">
+		<input type="hidden" name="current_sentence" value= "<%= @current_sentence %>">
+	</form>
+
+
+	<form class="form-horizontal" role="form" action="/mturk/question" method="post">
+		<div class="btn-toolbar-vertical">
+			<button type="submit" class="btn btn-primary btn-lg btn-block" name="option" value="copmlete">Finish</button>
+		</div>
+		
+		<input type="hidden" name="worker_id" value="<%= @worker_id %>">
+		<input type="hidden" name="chance_q" value="<%= @chance_q %>">
+		<input type="hidden" name="hit_window" value="<%= @hit_window %>">
+
+		<!--<% if @test_question_finished != nil %>
+		<% for i in 0..(@test_question_finished.length-1) %>
+		<input type="hidden" name="test_question_finished[<%=i%>]" value="<%=@test_question_finished[i]%>">
+		<% end %>
+		<% end %>
+
+		<% if @real_question_finished != nil %>
+		<% for i in 0..(@real_question_finished.length-1) %>
+		<input type="hidden" name="real_question_finished[<%=i%>]" value="<%=@real_question_finished[i]%>">
+		<% end %>
+		<% end %>-->
+
+		<% if @test_question_index_in_batch != nil %>
+		<% for i in 0..(@test_question_index_in_batch.length-1) %>
+		<input type="hidden" name="test_question_index_in_batch[<%=i%>]" value="<%=@test_question_index_in_batch[i]%>">
+		<% end %>
+		<% end %>
+
+		<input type="hidden" name="current_question_id" value= "<%= @current_question["_id"] %>">
+		<input type="hidden" name="current_sentence" value= "<%= @current_sentence %>">
+	</form>
+
+
+</div> <!--panel-body end-->

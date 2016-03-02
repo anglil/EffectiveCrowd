@@ -1,0 +1,15 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2012 The MathWorks, Inc.
+                     R2013a (8.1.0.47) 64-bit (glnxa64)
+                             November 21, 2012
+
+[Warning: Name is nonexistent or not a directory: /home/qifan/matlab/mobicom13] 
+[Warning: Name is nonexistent or not a directory: /home/qifan/matlab/power] 
+[Warning: Name is nonexistent or not a directory: /home/qifan/matlab/spasm] 
+[Warning: Name is nonexistent or not a directory: /home/qifan/matlab/doa] 
+[Warning: Name is nonexistent or not a directory: /home/qifan/matlab/scripts] 
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 

@@ -1,0 +1,91 @@
+<!--<h1>Mturk#login</h1>
+<p>Find me in app/views/mturk/login.html.erb</p>-->
+
+<head>
+	<style media="screen" type="text/css">
+		.wrapper { text-align: center; }
+	</style>
+</head>
+
+<div class="panel-heading">
+	<h1 class="panel-title bold gray">Instructions</h1>
+</div>
+<div class="panel-body">
+	<ul style="text-align: left">
+		You will be presented with sentences that have a <strong><font color="red">person</font></strong> and a <strong><font color="green">location</font></strong> highlighted.
+		<br>
+		Your task is to determine which of these relations are expressed between the person and location:
+		<UL>
+		<li><strong><font color="blue">has nationality</font></strong>
+		<li><strong><font color="blue">born in</font></strong> <!-- list item -->
+		<li><strong><font color="blue">lived in</font></strong>
+		<li><strong><font color="blue">died in</font></strong>
+		<li><strong><font color="blue">traveled to</font></strong>
+		</UL>
+		For example the sentence "<strong><font color="green">Syria</font></strong>'s president, <strong><font color="red">Bashar Assad</font></strong>, gave a speech on Tuesday" has two relations, <strong><font color="blue">has nationality</font></strong> and <strong><font color="blue">lived in</font></strong>, since you can assume that the president of Syria must have nationality Syria and lives in that nation.
+		<br><br>
+		<br><br>
+		<strong>IMPORTANT</strong>: You should only select relations that can be inferred by reading the sentence, even if you know others are true. You also should not select the facts that are likely to be true, but you are not sure after reading the sentence.
+		<br><br>
+		You will start with a brief tutorial to help you learn the definition of each relation and then be presented with 20 sentences. 
+		<br><br>
+		We know the correct relation answers to some of these sentence questions, and you will only stay if you get these questions right.
+		<br><br>
+		You'll get paid $0.50 after each successful batch of 20 questions -- plus a <strong>bonus</strong> of $1.00 after every 10 batches (equal to 200 questions).
+		<br><br>
+		Enter your Amazon Mechanical Worker ID to proceed and please ensure it is correct, otherwise we won't be able to pay you.
+		<br><br>
+	</ul>	
+
+	<br><br>
+
+	<form class="form-horizontal" role="form" action="/mturk" method="post">
+		<div class="form-group wrapper">
+			<label class="col-sm-3 control-label">Worker ID</label>
+			<% if (@worker_id_filled == false) %>
+			<div class="wrapper">
+				<input class="form-control" name="worker_id"> <!--variable name = value-->
+			</div>
+			<% else %>
+			<div class="wrapper">
+				<input class="form-control" name="worker_id" value="<%=@worker_id%>"> <!--variable name = value-->
+			</div>
+			<% end %>
+		</div>
+			
+		<div class="form-group">
+			<% if (@worker_id_filled == false) %>
+			<div class="wrapper">
+				<button type="submit" class="btn btn-default">Enter</button>	
+				<p style="color:red"><%= @message%></p>
+			</div>
+			<% else %>
+			<div class="wrapper">
+				<button type="submit" disabled class="btn btn-default">Enter</button>	
+			</div>
+			<% end %>
+		</div>
+	</form>
+		
+<% if (@worker_id_filled == true) %>
+	<form class="form-horizontal" role="form" action="/mturk/tutorial1" method="post">
+		<div class="wrapper">
+			<button type="submit" class="btn btn-default">Go to Tutorial</button>
+		</div>	
+		<input type="hidden" name="worker_id" value="<%=@worker_id%>">
+		<input type="hidden" name="chances" value="<%= @chances %>">
+	</form>
+
+	<!--enter the question section-->
+	<% if User.get(@worker_id) != nil%>
+	<form class="form-horizontal" role="form" action="/mturk/question" method="post">
+		<div class="wrapper">
+			<button type="submit" class="btn btn-default">Go to Question</button>
+		</div>	
+		<input type="hidden" name="worker_id" value="<%=@worker_id%>">
+	</form>
+	<% end %>
+	
+<% end %>
+
+</div> <!--panel-body end-->
